@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:WPF_DESKTOP_APP_TEMPLATE"
     xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks" 
-    StartupUri="Views/WpfFormViews/Auth/LoginView.xaml">
+    StartupUri="MainWindow.xaml">
     <Application.Resources>
         <!-- Textboxes template-->
         <Style x:Key="TextBoxes" TargetType="TextBox">
