@@ -1,0 +1,236 @@
+﻿<Window x:Class="LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_DESKTOP_APP_TEMPLATE"
+        xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        mc:Ignorable="d"
+        Title="Login"
+        Height="477"
+        Width="725"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        FocusManager.FocusedElement="{Binding ElementName=Usernametxt}">
+
+    <!-- Outer margin leaves room for the drop shadow -->
+    <Border Margin="10"
+            Background="#F4F5F6"
+            CornerRadius="10">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="18" ShadowDepth="0" Opacity="0.25"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- ============ LEFT: hero image (rounded corners via brush) ============ -->
+            <Border Grid.Column="0" CornerRadius="10,0,0,10">
+                <Border.Background>
+                    <ImageBrush ImageSource="pack://application:,,,/Resources/cbum.png"
+                                Stretch="UniformToFill"/>
+                </Border.Background>
+            </Border>
+
+            <!-- ============ RIGHT: form panel ============ -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="36"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Title bar: name kept so you can hook drag-move (see notes) -->
+                <Grid x:Name="TitleBar" Grid.Row="0" Background="Transparent">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Margin="0,0,8,0">
+
+                        <Button x:Name="MinimizeBtn"
+                                Style="{StaticResource MinimizeButtonStyle}"
+                                Width="30" Height="26"
+                                Margin="0,0,4,0"
+                                Cursor="Hand"
+                                ToolTip="Minimize"
+                                AutomationProperties.Name="Minimize"
+                                IsTabStop="False">
+                            <Icon:PackIconMaterial Kind="Minus" Width="12" Height="10"/>
+                        </Button>
+
+                        <Button x:Name="CloseBtn"
+                                Style="{StaticResource MinimizeButtonStyle}"
+                                Width="30" Height="26"
+                                Cursor="Hand"
+                                ToolTip="Close"
+                                AutomationProperties.Name="Close"
+                                IsTabStop="False">
+                            <Icon:PackIconMaterial Kind="Close" Width="12" Height="10"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Content, vertically centred -->
+                <StackPanel Grid.Row="1"
+                            Width="320"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Margin="0,0,0,20">
+
+                    <!-- Logo + heading -->
+                    <Image Source="pack://application:,,,/Resources/LogoGym.png"
+                           Width="90" Height="90"
+                           HorizontalAlignment="Center"
+                           RenderOptions.BitmapScalingMode="HighQuality"/>
+
+                    <TextBlock Text="Welcome"
+                               FontSize="22"
+                               FontWeight="DemiBold"
+                               HorizontalAlignment="Center"
+                               Margin="0,12,0,2"/>
+
+                    <TextBlock Text="Sign in to continue"
+                               FontSize="12"
+                               Foreground="#727272"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,26"/>
+
+                    <!-- Username -->
+                    <TextBlock Text="Username"
+                               FontSize="11"
+                               FontWeight="SemiBold"
+                               Foreground="#727272"
+                               Margin="2,0,0,4"/>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="28"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Icon:PackIconMaterial Kind="Account"
+                                               Width="14" Height="14"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Left"
+                                               Margin="4,0,0,0"
+                                               Foreground="#727272"/>
+
+                        <TextBox x:Name="Usernametxt"
+                                 Grid.Column="1"
+                                 Style="{StaticResource TextBoxes}"
+                                 MaxLength="30"
+                                 BorderBrush="#727272"
+                                 TabIndex="0"
+                                 AutomationProperties.Name="Username"/>
+                    </Grid>
+
+                    <!-- Password -->
+                    <TextBlock Text="Password"
+                               FontSize="11"
+                               FontWeight="SemiBold"
+                               Foreground="#727272"
+                               Margin="2,18,0,4"/>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="28"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Icon:PackIconMaterial Kind="Lock"
+                                               Width="14" Height="14"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Left"
+                                               Margin="4,0,0,0"
+                                               Foreground="#727272"/>
+
+                        <!-- Masked + unmasked inputs share one cell; eye icons overlay on the right -->
+                        <Grid Grid.Column="1">
+                            <PasswordBox x:Name="Passwordtxt"
+                                         Style="{StaticResource PasswordBoxes}"
+                                         MaxLength="20"
+                                         BorderBrush="#727272"
+                                         TabIndex="1"
+                                         AutomationProperties.Name="Password"/>
+
+                            <TextBox x:Name="PasswordUnmask"
+                                     Style="{StaticResource TextBoxes}"
+                                     MaxLength="20"
+                                     BorderBrush="#727272"
+                                     Visibility="Collapsed"
+                                     IsTabStop="False"/>
+
+                            <Icon:PackIconMaterial x:Name="Eye"
+                                                   Kind="Eye"
+                                                   Width="16" Height="12"
+                                                   Cursor="Hand"
+                                                   ToolTip="Hide password"
+                                                   HorizontalAlignment="Right"
+                                                   VerticalAlignment="Center"
+                                                   Margin="0,0,10,0"
+                                                   Visibility="Hidden"/>
+
+                            <Icon:PackIconMaterial x:Name="Eye2"
+                                                   Kind="EyeOff"
+                                                   Width="16" Height="12"
+                                                   Cursor="Hand"
+                                                   ToolTip="Show password"
+                                                   HorizontalAlignment="Right"
+                                                   VerticalAlignment="Center"
+                                                   Margin="0,0,10,0"
+                                                   Visibility="Collapsed"/>
+                        </Grid>
+                    </Grid>
+
+                    <!-- Inline validation message (hidden until you set Visibility/Text in code) -->
+                    <TextBlock x:Name="ErrorText"
+                               FontSize="11"
+                               Foreground="#727272"
+                               TextWrapping="Wrap"
+                               Margin="2,8,0,0"
+                               Visibility="Collapsed"
+                               AutomationProperties.LiveSetting="Assertive"/>
+
+                    <!-- Forgot password -->
+                    <Label x:Name="forgotpassword"
+                           Content="Forgot password?"
+                           FontSize="11"
+                           FontStyle="Italic"
+                           Padding="0"
+                           Margin="0,10,2,18"
+                           HorizontalAlignment="Right"
+                           Cursor="Hand"
+                           Focusable="False">
+                        <Label.Style>
+                            <Style TargetType="Label">
+                                <Setter Property="FontStyle" Value="Italic"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Opacity" Value="0.7"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+
+                    <!-- Login button -->
+                    <Button x:Name="LoginBtn"
+                            Style="{StaticResource SubmitButton}"
+                            Content="Login"
+                            Height="40"
+                            Width="NaN"
+                            HorizontalAlignment="Stretch"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            IsDefault="True"
+                            TabIndex="2"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
